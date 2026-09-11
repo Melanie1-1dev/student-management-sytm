@@ -10,7 +10,7 @@ export default function Home() {
       className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center p-6"
       style={{ backgroundImage: "url('/images/background1.png')" }}
     >
-      {/* Dark overlay for better contrast */}
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/50"></div>
 
       {/* Main Card */}
@@ -80,11 +80,7 @@ export default function Home() {
               src="/images/hutgur.jpg"
               alt="Student"
             />
-            <p
-              className={`font-medium ${
-                isHovered ? "text-white" : "text-gray-700"
-              }`}
-            >
+            <p className={`font-medium ${isHovered ? "text-white" : "text-gray-700"}`}>
               Student Dashboard
             </p>
           </div>
@@ -103,11 +99,7 @@ export default function Home() {
               src="/images/teacher.jpg"
               alt="Teacher"
             />
-            <p
-              className={`font-medium ${
-                isHovered ? "text-white" : "text-gray-700"
-              }`}
-            >
+            <p className={`font-medium ${isHovered ? "text-white" : "text-gray-700"}`}>
               Teacher Dashboard
             </p>
           </div>
@@ -126,11 +118,7 @@ export default function Home() {
               src="/images/admin.jpg"
               alt="Admin"
             />
-            <p
-              className={`font-medium ${
-                isHovered ? "text-white" : "text-gray-700"
-              }`}
-            >
+            <p className={`font-medium ${isHovered ? "text-white" : "text-gray-700"}`}>
               Admin Dashboard
             </p>
           </div>

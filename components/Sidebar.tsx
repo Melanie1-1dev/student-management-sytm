@@ -18,8 +18,8 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-gray-900 text-white min-h-screen p-5 flex flex-col">
-      {/* Logo / Title */}
+    <aside className="w-64 bg-gray-900 dark:bg-gray-950 text-white min-h-screen p-5 flex flex-col border-r border-gray-800">
+      {/* Logo */}
       <div className="mb-10">
         <h2 className="text-xl font-bold tracking-tight">SMS</h2>
         <p className="text-xs text-gray-400 mt-1">Student Portal</p>
