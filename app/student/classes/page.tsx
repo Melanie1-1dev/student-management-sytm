@@ -1,6 +1,18 @@
 "use client";
 
-const classes = [
+import { useState } from "react";
+
+type ClassItem = {
+  id: number;
+  name: string;
+  code: string;
+  students: number;
+  schedule: string;
+  room: string;
+  status: string;
+};
+
+const initialClasses: ClassItem[] = [
   {
     id: 1,
     name: "Mathematics 201",
@@ -49,6 +61,47 @@ const classes = [
 ];
 
 export default function TeacherClassesPage() {
+  const [classes, setClasses] = useState<ClassItem[]>(initialClasses);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    code: "",
+    schedule: "",
+    room: "",
+    students: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleCreateClass = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.code) {
+      alert("Class name and code are required");
+      return;
+    }
+
+    const newClass: ClassItem = {
+      id: Date.now(),
+      name: formData.name,
+      code: formData.code,
+      schedule: formData.schedule || "Not set",
+      room: formData.room || "Not set",
+      students: Number(formData.students) || 0,
+      status: "Active",
+    };
+
+    setClasses([newClass, ...classes]);
+    setFormData({ name: "", code: "", schedule: "", room: "", students: "" });
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -61,7 +114,10 @@ export default function TeacherClassesPage() {
             Manage and view all your classes
           </p>
         </div>
-        <button className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-xl transition">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-xl transition"
+        >
           + Create New Class
         </button>
       </div>
@@ -106,6 +162,107 @@ export default function TeacherClassesPage() {
           </div>
         ))}
       </div>
+
+      {/* Create Class Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-xl">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+              Create New Class
+            </h2>
+
+            <form onSubmit={handleCreateClass} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Class Name *
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="e.g. Mathematics 201"
+                  className="text-xs w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Class Code *
+                </label>
+                <input
+                  type="text"
+                  name="code"
+                  value={formData.code}
+                  onChange={handleChange}
+                  placeholder="e.g. MATH 201"
+                  className="text-xs w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Schedule
+                </label>
+                <input
+                  type="text"
+                  name="schedule"
+                  value={formData.schedule}
+                  onChange={handleChange}
+                  placeholder="e.g. Mon & Wed • 09:00"
+                  className="text-xs w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Room
+                </label>
+                <input
+                  type="text"
+                  name="room"
+                  value={formData.room}
+                  onChange={handleChange}
+                  placeholder="e.g. Room 204"
+                  className="text-xs w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Number of Students
+                </label>
+                <input
+                  type="number"
+                  name="students"
+                  value={formData.students}
+                  onChange={handleChange}
+                  placeholder="e.g. 30"
+                  className="text-xs w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="flex-1 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition"
+                >
+                  Create Class
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
