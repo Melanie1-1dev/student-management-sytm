@@ -152,14 +152,14 @@ export default function StudentDashboard() {
                   />
                   <div>
                     <p className="font-medium text-gray-900">{item.title}</p>
-                    <p className="text-sm text-gray-500 mt-0.5">
+                    <p className="text-xs text-gray-500 mt-0.5">
                       {item.course} · {item.type}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p
-                    className={`text-sm font-medium ${
+                    className={`text-xs font-medium ${
                       item.urgent ? "text-red-600" : "text-gray-600"
                     }`}
                   >
